@@ -87,22 +87,68 @@ export default function EventsPage() {
         </section>
 
         {/* --- PAST EVENTS SECTION --- */}
-        <section>
-          <h2 className="text-xs tracking-[0.4em] text-gray-500 font-bold mb-8 border-l-2 border-gray-800 pl-4">LAST YEAR / PAST</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+        <section className="pb-20">
+          <div className="flex items-center gap-4 mb-10">
+            <h2 className="text-xs tracking-[0.4em] text-gray-500 font-bold border-l-2 border-gray-800 pl-4">
+              ARCHIVE / PAST
+            </h2>
+            <div className="h-[1px] flex-grow bg-gray-900"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {pastEvents.length > 0 ? (
               pastEvents.map((event) => (
                 <div 
                   key={event.id} 
-                  onClick={() => handleOpen(event)}
-                  className="cursor-pointer border border-gray-900 p-6 rounded-2xl bg-gray-950/10 grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100 hover:border-gray-500"
+                  className="group flex flex-col"
                 >
-                  <p className="text-[10px] text-gray-600 mb-1">{new Date(event.date).getFullYear()}</p>
-                  <h4 className="text-lg font-bold tracking-tight">{event.title}</h4>
+                  {/* POSTER (Clicking plays music) */}
+                  <div 
+                    onClick={() => handleOpen(event)}
+                    className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-gray-900 grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100 mb-4 cursor-pointer"
+                  >
+                    <img 
+                      src={event.image_url} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                      alt={event.title}
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <div className="bg-white/10 backdrop-blur-md p-4 rounded-full border border-white/20">
+                        <span className="text-xl">🎵</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* DETAILS & DRIVE LINK */}
+                  <div className="px-2">
+                    <p className="text-[10px] text-green-700 font-mono mb-1 tracking-widest uppercase">
+                      {new Date(event.date).toLocaleDateString('en-GB', { 
+                        month: 'long', 
+                        year: 'numeric' 
+                      })} • {event.location}
+                    </p>
+                    <h4 className="text-lg font-bold tracking-tight text-gray-400 group-hover:text-white transition-colors mb-4">
+                      {event.title}
+                    </h4>
+                  
+                    {/* GOOGLE DRIVE BUTTON (Only shows if link exists) */}
+                    {event.drive_url ? (
+                      <a 
+                        href={event.drive_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase py-2 px-4 border border-gray-800 rounded-lg hover:bg-white hover:text-black hover:border-white transition-all w-fit"
+                      >
+                        📁 View Photo Gallery
+                      </a>
+                    ) : (
+                      <span className="text-[10px] text-gray-700 italic">Photos coming soon...</span>
+                    )}
+                  </div>
                 </div>
               ))
             ) : (
-              <p className="text-gray-700 italic lowercase text-xs">History is being made...</p>
+              <p className="text-gray-700 italic lowercase text-xs col-span-full">History is being made...</p>
             )}
           </div>
         </section>

@@ -11,7 +11,13 @@ export default function Home() {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const { data } = await supabase.from('events').select('*')
+      // Add the .eq('is_past', false) to ONLY show upcoming events
+      const { data } = await supabase
+        .from('events')
+        .select('*')
+        .eq('is_past', false) // This is the magic line!
+        .order('date', { ascending: true })
+
       if (data) setEvents(data)
     }
     fetchEvents()
