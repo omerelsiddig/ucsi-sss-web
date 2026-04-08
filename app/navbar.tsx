@@ -28,7 +28,7 @@ export default function Navbar() {
       <div className="flex-1 flex items-center justify-end h-full">
         <div className="flex w-full max-w-2xl h-full items-stretch font-bold text-gray-400">
           
-          <Link href="/" className="flex-1 flex items-center justify-center text-[10px] md:text-sm hover:text-white transition-all uppercase border-l border-gray-900/50">
+          <Link href="/" className="flex-1 flex items-center justify-center text-[10px] md:text-sm hover:text-green-500 transition-all uppercase border-l border-gray-900/50">
             Home
           </Link>
           
